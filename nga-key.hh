@@ -64,9 +64,7 @@ namespace key {
 		NGA_INLINE listener(listener const&)			= delete;
 		NGA_INLINE listener& operator=(listener const&) = delete;
 		NGA_INLINE ~listener(void) { free(); }
-		NGA_INLINE static unique_ptr<listener> create(int TYPE) {
-			return unique_ptr<listener>(new listener(TYPE));
-		}
+		NGA_INLINE static unique_ptr<listener> create(int TYPE) { return unique_ptr<listener>(new listener(TYPE)); }
 		NGA_INLINE bool listen(void) {
 			if (_fds.empty()) return false;
 			for (;;) {
@@ -75,9 +73,7 @@ namespace key {
 					if (pfd.revents & POLLIN) {
 						struct input_event event;
 						ssize_t			   bytesRead = read(pfd.fd, &event, sizeof(event));
-						if (bytesRead > 0 && event.type == EV_KEY && event.code == _type
-								&& event.value == 1)
-							return true;
+						if (bytesRead > 0 && event.type == EV_KEY && event.code == _type && event.value == 1) return true;
 					}
 			}
 		}

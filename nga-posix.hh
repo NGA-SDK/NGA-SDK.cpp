@@ -83,8 +83,7 @@ namespace f {
 	NGA_INLINE static bool dmt(strv p) {
 		if (DIR* dir = opendir(p.data())) {
 			while (const struct dirent* entry = readdir(dir))
-				if (strcmp(entry->d_name, ".") && strcmp(entry->d_name, ".."))
-					return closedir(dir), false;
+				if (strcmp(entry->d_name, ".") && strcmp(entry->d_name, "..")) return closedir(dir), false;
 			return closedir(dir), true;
 		}
 		return false;
@@ -160,20 +159,17 @@ namespace f {
 					else {
 						vector<string> tmp_paths;
 						for (str const& path : rets)
-							if (str const target = (fs::path(path) / item).string(); ok(target))
-								tmp_paths.push_back(target);
+							if (str const target = (fs::path(path) / item).string(); ok(target)) tmp_paths.push_back(target);
 						if (tmp_paths.empty()) return {};
 						rets = tmp_paths;
 					}
 				else {
 					vector<string> tmp_paths;
-					for (str const& dir_path :
-							rets.empty() ? (vector<string>){ tmp_path.string() } : rets)
+					for (str const& dir_path : rets.empty() ? (vector<string>){ tmp_path.string() } : rets)
 						if (DIR* dir = opendir(dir_path.data())) {
 							while (const struct dirent* entry = readdir(dir))
 								if (str const name = entry->d_name; !name.starts_with('.'))
-									if (item == "*")
-										tmp_paths.push_back((fs::path(dir_path) / name).string());
+									if (item == "*") tmp_paths.push_back((fs::path(dir_path) / name).string());
 									else {
 										size_t		 pos = 0;
 										stringstream ss(item);
@@ -182,9 +178,7 @@ namespace f {
 										while (getline(ss, sub, '*'))
 											if (sub.empty()) continue;
 											else if (pos = name.find(sub, pos);
-													pos == str::npos
-													|| (!check && item[0] != '*'
-															&& !name.starts_with(sub))) {
+													pos == str::npos || (!check && item[0] != '*' && !name.starts_with(sub))) {
 												ok = false;
 												break;
 											} else {

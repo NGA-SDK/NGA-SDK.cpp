@@ -66,8 +66,7 @@ namespace s {
 			bool		 ok = false, check = false;
 			while (getline(ss, item, '*'))
 				if (item.empty()) continue;
-				else if (pos = s1.find(item, pos);
-						pos == str::npos || (!check && s2[0] != '*' && !s1.starts_with(item))) {
+				else if (pos = s1.find(item, pos); pos == str::npos || (!check && s2[0] != '*' && !s1.starts_with(item))) {
 					ok = false;
 					break;
 				} else {
